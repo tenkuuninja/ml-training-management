@@ -25,8 +25,8 @@ public class handleFileUploadAPI {
 	public void handleFileUpload(@RequestParam("file") MultipartFile file) throws IOException {
 		uploadCSVService.UploadFile(file);
 		
-		String linkFiels = new String("E:/MCLN/ml-training-management/Dataset/" +file.getName());
-		
-		csvService.readCSVAndSaveLabels(linkFiels);
+//		String linkFiels = new String("E:/MCLN/ml-training-management/Dataset/" +file.getName());
+//		
+//		csvService.readCSVAndSaveLabels(linkFiels);
 	}
 }

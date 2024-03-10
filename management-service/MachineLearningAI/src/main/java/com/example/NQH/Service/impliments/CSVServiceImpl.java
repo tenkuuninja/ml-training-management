@@ -10,13 +10,17 @@ import java.util.List;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.stereotype.Service;
 
 import com.example.NQH.Entity.DatasetEntity;
 import com.example.NQH.Repository.DatasetRepository;
 import com.example.NQH.Service.CSVService;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
+@Service
 public class CSVServiceImpl implements CSVService {
 	
 	private final DatasetRepository datasetRepository;
@@ -35,7 +39,7 @@ public class CSVServiceImpl implements CSVService {
                 }
                 break; 
             }
-            File file = new File(filePath);
+           File file = new File(filePath);
            DatasetEntity dataset  = new DatasetEntity();
            dataset.setName(file.getName());
            dataset.setLink(filePath);

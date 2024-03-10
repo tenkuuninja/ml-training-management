@@ -4,9 +4,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import com.example.NQH.Service.UploadCSVService;
-
+@Service
 public class UploadFileServiceImpl implements UploadCSVService {
 
 	@Override
