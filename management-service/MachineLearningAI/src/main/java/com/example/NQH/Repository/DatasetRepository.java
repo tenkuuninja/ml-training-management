@@ -1,10 +1,12 @@
 package com.example.NQH.Repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.NQH.Entity.DatasetEntity;
+import com.example.NQH.Entity.CSVEntity;
 @Repository
-public interface DatasetRepository extends JpaRepository<DatasetEntity, Long>{	
-	
+public interface DatasetRepository extends JpaRepository<CSVEntity, Long>{	
+	Optional<CSVEntity> findById(Long id);
 }

@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,32 +20,32 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-
 @Entity
-public class DatasetEntity extends BaseEntity {
+
+public class CSVEntity extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column
-	private List<String> labels;
+	private String labels;
 	@Column
 	private String name;
 	@Column
 	private String link;
 	@Column 
-	private double Accuracy;
+	private float accuracy;
 	@Column 
-	private double Precision;
+	private float precision_score;
 	@Column 
-	private double Recall ;
+	private float recall_score ;
 	@Column 
-	private double F1_score;
+	private float f1score;
 	@Column 
-	private double MSE;
+	private float mse;
 	@Column 
-	private double RMSE;
+	private float rmse;
 	@Column 
-	private double MAE;
+	private float mae;
 	@Column 
-	private double R_squared;
+	private double rsquared;
 }

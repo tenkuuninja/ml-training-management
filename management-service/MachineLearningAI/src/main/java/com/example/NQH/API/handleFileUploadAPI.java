@@ -13,10 +13,13 @@ import com.example.NQH.Service.CSVService;
 import com.example.NQH.Service.UploadCSVService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RequiredArgsConstructor
 @RestController
+@Slf4j
 public class handleFileUploadAPI {
 	private final UploadCSVService uploadCSVService;
 	private final CSVService csvService;
@@ -25,8 +28,10 @@ public class handleFileUploadAPI {
 	public void handleFileUpload(@RequestParam("file") MultipartFile file) throws IOException {
 		uploadCSVService.UploadFile(file);
 		
-//		String linkFiels = new String("E:/MCLN/ml-training-management/Dataset/" +file.getName());
-//		
-//		csvService.readCSVAndSaveLabels(linkFiels);
+//		log.info(file.getOriginalFilename());
+		
+	String linkFiels = new String("E:/MCLN/ml-training-management/Dataset/" +file.getOriginalFilename());
+	
+		csvService.readCSVAndSaveLabels(linkFiels);
 	}
 }
