@@ -42,7 +42,7 @@ public class CSVApi {
 		return ResponseEntity.ok().body(CSV);
 	}
 	
-	@DeleteMapping("/CSV/{id)")
+	@DeleteMapping("/CSV/{id}")
 	public ResponseEntity<CSVEntity> deleteCSV(@PathVariable("id") Long id)
 	{
 		CSVEntity CSV = csvService.deleteCSV(id);

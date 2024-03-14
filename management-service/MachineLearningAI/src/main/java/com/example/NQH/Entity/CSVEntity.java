@@ -26,7 +26,7 @@ public class CSVEntity extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column
+	@Column(columnDefinition = "TEXT")
 	private String labels;
 	@Column
 	private String name;
