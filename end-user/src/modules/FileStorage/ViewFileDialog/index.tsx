@@ -9,7 +9,6 @@ import {
   Table,
   TableCell,
   TableContainer,
-  TableHead,
   TableRow,
 } from '@mui/material'
 import { FC, useEffect, useState } from 'react'
@@ -59,7 +58,16 @@ export const ViewFileDialog: FC<IViewFileDialogProps> = (props) => {
   }, [data?.link])
 
   return (
-    <Dialog open={open} onClose={onClose} fullWidth maxWidth="xl" scroll="paper">
+    <Dialog
+      open={open}
+      onClose={onClose}
+      fullWidth
+      maxWidth="xl"
+      scroll="paper"
+      PaperProps={{
+        className: 'rounded-[16px]',
+      }}
+    >
       <DialogTitle className="font-bold">Upload File</DialogTitle>
       <DialogContent>
         <div className="space-y-[12px]">
