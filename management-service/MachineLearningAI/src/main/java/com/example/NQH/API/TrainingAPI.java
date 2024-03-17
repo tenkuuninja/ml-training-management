@@ -11,6 +11,7 @@ import reactor.core.publisher.Mono;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RequiredArgsConstructor
 @RestController
@@ -18,9 +19,13 @@ public class TrainingAPI {
 	private final FlaskApiService flaskApiService;
 	
 	@PostMapping("/training")
-	public String Training(@RequestBody TrainingDTO data) {
+	public String Training(@RequestParam("fileTrain") String linkFileTrain,
+						   @RequestParam("fileTest") String linkFileTest ,
+						   @RequestParam("featureLabels") String[] featureLabels,
+						   @RequestParam("targetLabel") String targetLabel   ) {
 		
-		Mono<String> result = flaskApiService.callFlaskApi(data.getLinkFileTrain(),data.getLinkFileTestl(),data.getFeatureLabels(),data.getTargetLabel());
+		Mono<String> result = flaskApiService.callFlaskApi(linkFileTrain,linkFileTest ,featureLabels,targetLabel );
+		
 		result.subscribe(
 			response	-> {
 				

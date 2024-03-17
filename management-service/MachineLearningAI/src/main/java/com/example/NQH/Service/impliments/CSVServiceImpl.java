@@ -45,10 +45,10 @@ public class CSVServiceImpl implements CSVService {
 
 			File file = new File(filePath);
 			CSVEntity dataset = new CSVEntity();
-			dataset.setName(file.getName());
+			dataset.setFileName(file.getName());
 			dataset.setLink(filePath);
 			dataset.setLabels(labels);
-			dataset.setFileName(fileName);
+			dataset.setName(fileName);
 
 //			log.info(labels);
 

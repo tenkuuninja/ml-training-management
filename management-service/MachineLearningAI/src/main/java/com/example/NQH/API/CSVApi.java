@@ -17,6 +17,7 @@ import com.example.NQH.Service.CSVService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PutMapping;
 
 
@@ -39,8 +40,8 @@ public class CSVApi {
 		return ResponseEntity.ok().body(CSV);
 	}
 	@PutMapping("/CSV/{id}")
-	public ResponseEntity<CSVEntity>updateCSV(@PathVariable("id") Long id, @RequestBody() FileDTO data) {
-		CSVEntity CSV = csvService.updateCSV(id,data.getName());
+	public ResponseEntity<CSVEntity>updateCSV(@PathVariable("id") Long id, @RequestParam("name") String name) {
+		CSVEntity CSV = csvService.updateCSV(id,name);
 		return ResponseEntity.ok().body(CSV);
 	}
 	
