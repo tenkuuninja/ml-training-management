@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.NQH.API.DTO.FileDTO;
 import com.example.NQH.Entity.CSVEntity;
 import com.example.NQH.Repository.DatasetRepository;
 import com.example.NQH.Service.CSVService;
@@ -37,10 +38,9 @@ public class CSVApi {
 		List<CSVEntity> CSV = csvService.getAllCSV();
 		return ResponseEntity.ok().body(CSV);
 	}
-	
 	@PutMapping("/CSV/{id}")
-	public ResponseEntity<CSVEntity>updateCSV(@PathVariable("id") Long id, @RequestBody String entity) {
-		CSVEntity CSV = csvService.updateCSV(id);
+	public ResponseEntity<CSVEntity>updateCSV(@PathVariable("id") Long id, @RequestBody() FileDTO data) {
+		CSVEntity CSV = csvService.updateCSV(id,data.getName());
 		return ResponseEntity.ok().body(CSV);
 	}
 	
@@ -50,5 +50,4 @@ public class CSVApi {
 		CSVEntity CSV = csvService.deleteCSV(id);
 		return ResponseEntity.ok().body(CSV);
 	}
-	
 }

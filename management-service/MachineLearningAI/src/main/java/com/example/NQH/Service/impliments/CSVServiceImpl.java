@@ -28,7 +28,7 @@ public class CSVServiceImpl implements CSVService {
 	private final DatasetRepository datasetRepository;
 
 	@Override
-	public void readCSVAndSaveLabels(String filePath) throws IOException {
+	public void readCSVAndSaveLabels(String filePath,String fileName) throws IOException {
 		StringBuilder labelsBuilder = new StringBuilder();
 		try (
 				Reader reader = new FileReader(filePath);
@@ -48,6 +48,7 @@ public class CSVServiceImpl implements CSVService {
 			dataset.setName(file.getName());
 			dataset.setLink(filePath);
 			dataset.setLabels(labels);
+			dataset.setFileName(fileName);
 
 //			log.info(labels);
 
@@ -66,8 +67,9 @@ public class CSVServiceImpl implements CSVService {
 	}
 	
 	@Override
-	public CSVEntity updateCSV(Long id) {
+	public CSVEntity updateCSV(Long id,String name) {
 		CSVEntity csv = datasetRepository.findById(id).get();
+		csv.setFileName(name);
 		datasetRepository.save(csv);
 		return csv;
 	}

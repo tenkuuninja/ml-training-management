@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.NQH.API.DTO.FileDTO;
 import com.example.NQH.Service.CSVService;
 import com.example.NQH.Service.UploadCSVService;
 
@@ -28,13 +29,13 @@ public class handleFileUploadAPI {
 	private final CSVService csvService;
 	
 	@PostMapping("/upload")
-	public void handleFileUpload(@RequestParam("file") MultipartFile file) throws IOException {
+	public void handleFileUpload(@RequestParam("file") MultipartFile file,@RequestBody FileDTO data) throws IOException {
 		uploadCSVService.UploadFile(file);
 		
 //		log.info(file.getOriginalFilename());
 		
-	String linkFiels = new String("E:/MCLN/ml-training-management/Dataset/" +file.getOriginalFilename());
+	String linkFiels = new String("E:/MCLN/ml-training-management/Dataset/" + file.getOriginalFilename());
 	
-		csvService.readCSVAndSaveLabels(linkFiels);
+		csvService.readCSVAndSaveLabels(linkFiels,data.getName());
 	}
 }

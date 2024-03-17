@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import com.example.NQH.Entity.CSVEntity;
 
 public interface CSVService {
-	void readCSVAndSaveLabels(String filePath) throws IOException;
+	void readCSVAndSaveLabels(String filePath,String fileName) throws IOException;
 	
 	CSVEntity getCSV(Long id);
 	
@@ -16,7 +16,7 @@ public interface CSVService {
 
 
 
-	CSVEntity updateCSV(Long id);
+	CSVEntity updateCSV(Long id,String name);
 
 	CSVEntity deleteCSV(Long id);
 }

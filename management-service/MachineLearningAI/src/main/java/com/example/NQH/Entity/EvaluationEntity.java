@@ -15,11 +15,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class EvaluationEntity extends BaseEntity{
-	private float accuracy;
-	@Column 
-	private float precision_score;
-	@Column 
-	private float recall_score ;
+
 	@Column 
 	private float f1score;
 	@Column 

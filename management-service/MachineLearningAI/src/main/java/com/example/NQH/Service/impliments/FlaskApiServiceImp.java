@@ -27,5 +27,4 @@ public class FlaskApiServiceImp implements FlaskApiService {
 				.retrieve()
 				.bodyToMono(String.class);
 	}
-
 }
