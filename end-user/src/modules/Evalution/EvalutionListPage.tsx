@@ -15,7 +15,7 @@ import {
 import { useMutation } from '@tanstack/react-query'
 import { useCallback, useEffect, useState } from 'react'
 import { AiOutlineEdit } from 'react-icons/ai'
-import { BsEye, BsPen, BsPlus, BsTrash } from 'react-icons/bs'
+import { BsEye, BsPlus, BsTrash } from 'react-icons/bs'
 import { CreateOrUpdateEvaluationDialog } from './CreateOrUpdateEvaluationDialog'
 import { DeleteEvaluationDialog } from './DeleteEvaluationDialog'
 import { ViewEvaluationDialog } from './ViewEvaluationDialog'
@@ -52,7 +52,7 @@ export const EvaluationListPage = () => {
       </div>
 
       <TableContainer component={Paper} elevation={0} className="mt-[32px]">
-        <Table size="medium" className="min-h-[400px] w-full border-spacing-0">
+        <Table size="medium" className="w-full border-spacing-0">
           <TableHead className="bg-[#01B5DC]">
             <TableRow>
               <TableCell className="font-bold text-white">#</TableCell>
@@ -71,7 +71,7 @@ export const EvaluationListPage = () => {
                 <TableRow
                   key={i}
                   sx={(theme) => ({
-                    '&:nth-of-type(odd)': {
+                    '&:nth-of-type(even)': {
                       backgroundColor: theme.palette.action.hover,
                     },
                     '&:last-child td, &:last-child th': {
@@ -86,7 +86,7 @@ export const EvaluationListPage = () => {
                   <TableCell align="right" className="line-clamp-1">
                     {row?.labels}
                   </TableCell>
-                  <TableCell align="right">
+                  <TableCell align="right" className="whitespace-nowrap">
                     <IconButton color="info" onClick={() => setItemToShow(row)}>
                       <BsEye />
                     </IconButton>

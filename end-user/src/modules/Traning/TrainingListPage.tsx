@@ -15,7 +15,7 @@ import {
 import { useMutation } from '@tanstack/react-query'
 import { useCallback, useEffect, useState } from 'react'
 import { AiOutlineEdit } from 'react-icons/ai'
-import { BsEye, BsPen, BsPlus, BsTrash } from 'react-icons/bs'
+import { BsEye, BsPlus, BsTrash } from 'react-icons/bs'
 import { CreateOrUpdateTrainingDialog } from './CreateOrUpdateTrainingDialog'
 import { DeleteTrainingDialog } from './DeleteTrainingDialog'
 import { ViewTrainingDialog } from './ViewTrainingDialog'
@@ -52,15 +52,18 @@ export const TrainingListPage = () => {
       </div>
 
       <TableContainer component={Paper} elevation={0} className="mt-[32px]">
-        <Table size="medium" className="min-h-[400px] w-full border-spacing-0">
+        <Table size="medium" className="w-full border-spacing-0">
           <TableHead className="bg-[#01B5DC]">
             <TableRow>
               <TableCell className="font-bold text-white">#</TableCell>
               <TableCell className="font-bold text-white" align="right">
                 Name
               </TableCell>
-              <TableCell className="font-bold text-white" align="right">
-                Labels
+              <TableCell className="font-bold text-white" align="center">
+                Best training loss
+              </TableCell>
+              <TableCell className="font-bold text-white" align="center">
+                Best test loss
               </TableCell>
               <TableCell className="font-bold text-white" align="right"></TableCell>
             </TableRow>
@@ -71,7 +74,7 @@ export const TrainingListPage = () => {
                 <TableRow
                   key={i}
                   sx={(theme) => ({
-                    '&:nth-of-type(odd)': {
+                    '&:nth-of-type(even)': {
                       backgroundColor: theme.palette.action.hover,
                     },
                     '&:last-child td, &:last-child th': {
@@ -83,10 +86,9 @@ export const TrainingListPage = () => {
                     {row?.id}
                   </TableCell>
                   <TableCell align="right">{row?.name}</TableCell>
-                  <TableCell align="right" className="line-clamp-1">
-                    {row?.labels}
-                  </TableCell>
-                  <TableCell align="right">
+                  <TableCell align="right" className=""></TableCell>
+                  <TableCell align="right" className=""></TableCell>
+                  <TableCell align="right" className="whitespace-nowrap">
                     <IconButton color="info" onClick={() => setItemToShow(row)}>
                       <BsEye />
                     </IconButton>

@@ -22,7 +22,7 @@ interface ICreateOrUpdateEvaluationDialogProps {
 }
 
 const validationSchema = Yup.object({
-  name: Yup.string().trim().required('Token address is required'),
+  name: Yup.string().trim().required('Name is required'),
 })
 
 const defaultValue = {

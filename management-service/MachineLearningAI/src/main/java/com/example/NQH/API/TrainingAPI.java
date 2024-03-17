@@ -10,11 +10,13 @@ import com.example.NQH.Service.ModelService;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RequiredArgsConstructor
+@CrossOrigin
 @RestController
 public class TrainingAPI {
 	private final FlaskApiService flaskApiService;

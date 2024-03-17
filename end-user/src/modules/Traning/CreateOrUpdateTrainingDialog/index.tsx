@@ -4,8 +4,16 @@ import { useBoolean } from '@/common/hooks/useBoolean'
 import { FileApi, TrainingApi } from '@/common/services'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
-import { DialogActions, DialogContent, DialogTitle, MenuItem } from '@mui/material'
-import { FC, useEffect } from 'react'
+import {
+  Checkbox,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControlLabel,
+  FormHelperText,
+  MenuItem,
+} from '@mui/material'
+import { FC, useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { BsPlus } from 'react-icons/bs'
 import { toast } from 'react-toastify'
@@ -21,10 +29,15 @@ interface ICreateOrUpdateTrainingDialogProps {
 }
 
 const validationSchema = Yup.object({
-  name: Yup.string().trim().required('Token address is required'),
+  name: Yup.string().trim().required('Name is required'),
+  fileTrain: Yup.string().trim().required('File train is required'),
+  fileTest: Yup.string().trim().required('File test is required'),
+  featureLabels: Yup.array().min(2, 'Feature labels must least 2 labels'),
+  targetLabel: Yup.string().trim().required('Target label is required'),
 })
 
 const defaultValue = {
+  name: '',
   fileTrain: '',
   fileTest: '',
   featureLabels: [] as string[],
@@ -44,6 +57,42 @@ export const CreateOrUpdateTrainingDialog: FC<ICreateOrUpdateTrainingDialogProps
   const values = form.watch()
   const { errors, isSubmitting } = form.formState
 
+  const labels: string[] = useMemo(() => {
+    if (!values?.fileTrain || !values?.fileTest) {
+      return []
+    }
+    const fileTrainSelectLabels = files
+      ?.find((item) => item?.link === values?.fileTrain)
+      ?.labels?.split(';')
+      ?.filter((item: any) => item)
+    const fileTestSelectLabels = files
+      ?.find((item) => item?.link === values?.fileTest)
+      ?.labels?.split(';')
+      ?.filter((item: any) => item)
+
+    const map: any = {}
+    const labels: string[] = []
+    for (const file of fileTrainSelectLabels) {
+      map[file] = true
+    }
+    for (const file of fileTestSelectLabels) {
+      if (map[file]) {
+        labels.push(file)
+      }
+    }
+
+    return labels
+  }, [files?.length, values?.fileTrain, values?.fileTest])
+
+  const availableFeatureLabels: string[] = useMemo(() => {
+    form.setValue('featureLabels', [])
+    if (!values?.targetLabel) {
+      return []
+    }
+
+    return labels?.filter((item: any) => item !== values?.targetLabel)
+  }, [labels, values?.targetLabel])
+
   console.log('CreateOrUpdateTrainingDialog', values, errors)
 
   const handleSubmit = async ({ ...values }: typeof defaultValue) => {
@@ -59,6 +108,18 @@ export const CreateOrUpdateTrainingDialog: FC<ICreateOrUpdateTrainingDialogProps
     } catch (error) {
       toast.error((isUpdate ? 'Update' : 'Create') + ' file failed')
       console.error('handleSubmit', error)
+    }
+  }
+
+  const handlePageItemsChange = (checked: boolean, value: string) => {
+    let items: string[] = []
+    if (Array.isArray(values?.featureLabels)) {
+      items = values?.featureLabels?.filter?.((item: any) => item !== value)
+    }
+    if (checked) {
+      form.setValue('featureLabels', [...items, value], { shouldDirty: true })
+    } else {
+      form.setValue('featureLabels', [...items], { shouldDirty: true })
     }
   }
 
@@ -85,6 +146,7 @@ export const CreateOrUpdateTrainingDialog: FC<ICreateOrUpdateTrainingDialogProps
             </p>
             <RHFTextField
               name="name"
+              disabled={isUpdate}
               placeholder="Enter file name"
               sx={{
                 '.MuiInputBase-root': { backgroundColor: '#f7f6f2' },
@@ -97,8 +159,10 @@ export const CreateOrUpdateTrainingDialog: FC<ICreateOrUpdateTrainingDialogProps
               File train <span className="text-red-600">*</span>
             </p>
             <RHFTextField
-              name="name"
+              name="fileTrain"
+              disabled={isUpdate}
               placeholder="Enter file name"
+              select
               sx={{
                 '.MuiInputBase-root': { backgroundColor: '#f7f6f2' },
                 fieldset: { border: 'none' },
@@ -116,8 +180,10 @@ export const CreateOrUpdateTrainingDialog: FC<ICreateOrUpdateTrainingDialogProps
               File test <span className="text-red-600">*</span>
             </p>
             <RHFTextField
-              name="name"
+              name="fileTest"
+              disabled={isUpdate}
               placeholder="Enter file name"
+              select
               sx={{
                 '.MuiInputBase-root': { backgroundColor: '#f7f6f2' },
                 fieldset: { border: 'none' },
@@ -135,19 +201,43 @@ export const CreateOrUpdateTrainingDialog: FC<ICreateOrUpdateTrainingDialogProps
               Result label <span className="text-red-600">*</span>
             </p>
             <RHFTextField
-              name="name"
+              name="targetLabel"
+              disabled={isUpdate}
               placeholder="Enter file name"
+              select
               sx={{
                 '.MuiInputBase-root': { backgroundColor: '#f7f6f2' },
                 fieldset: { border: 'none' },
               }}
             >
-              {files?.map((item, i) => (
-                <MenuItem value={item?.link} key={i}>
-                  {item?.name} ({item?.fileName})
+              {labels?.map((item, i) => (
+                <MenuItem value={item} key={i}>
+                  {item}
                 </MenuItem>
               ))}
             </RHFTextField>
+          </div>
+          <div className="space-y-[12px]">
+            <p className="text-[#60666C]">
+              Feature labels <span className="text-red-600">*</span>
+            </p>
+            {availableFeatureLabels?.map((item, i) => (
+              <FormControlLabel
+                key={i}
+                disabled={isUpdate}
+                control={
+                  <Checkbox
+                    checked={!!values?.featureLabels?.includes?.(item)}
+                    onChange={(e, checked) => handlePageItemsChange(checked, item)}
+                  />
+                }
+                label={item}
+                className="flex"
+              />
+            ))}
+            {errors?.featureLabels?.message && (
+              <FormHelperText error>{errors?.featureLabels?.message}</FormHelperText>
+            )}
           </div>
         </DialogContent>
         <DialogActions>

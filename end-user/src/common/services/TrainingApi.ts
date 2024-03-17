@@ -17,9 +17,9 @@ export class TrainingApi {
   }
 
   static createTraining = async (payload: Record<string, any>) => {
-    const path = '/training/' + payload?.id
+    const path = '/training/'
     const formData = toFormData(payload)
-    const res = await instance.put(path, formData)
+    const res = await instance.post(path, payload)
     return res?.data
   }
 

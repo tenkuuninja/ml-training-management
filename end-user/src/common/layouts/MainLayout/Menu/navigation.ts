@@ -1,12 +1,5 @@
-import {
-  AiOutlineBook,
-  AiOutlineDashboard,
-  AiOutlineKey,
-  AiOutlinePoweroff,
-  AiOutlineUser,
-} from 'react-icons/ai'
-import { BsPeople } from 'react-icons/bs'
-import { SlGraduation } from 'react-icons/sl'
+import { AiOutlineSetting } from 'react-icons/ai'
+import { BsFile } from 'react-icons/bs'
 import { VscOpenPreview } from 'react-icons/vsc'
 
 export const navigation = [
@@ -16,12 +9,12 @@ export const navigation = [
       {
         label: 'File Storage',
         path: '/file-storage',
-        icon: VscOpenPreview,
+        icon: BsFile,
       },
       {
         label: 'Training',
         path: '/training',
-        icon: VscOpenPreview,
+        icon: AiOutlineSetting,
       },
       {
         label: 'Evaluate',

@@ -47,7 +47,7 @@ export const DeleteTrainingDialog: FC<IDeleteTrainingDialogProps> = (props) => {
 
   return (
     <Dialog open={open} onClose={onClose} className="max-w-[640px] p-0 pb-[30px]">
-      <DialogTitle className="font-bold">Delete File</DialogTitle>
+      <DialogTitle className="font-bold">Delete Model</DialogTitle>
       <DialogContent>
         <p>
           Do you want delete this file?

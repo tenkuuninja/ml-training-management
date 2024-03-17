@@ -22,15 +22,6 @@ interface IViewFileDialogProps {
   onSuccess?: VoidFunction
 }
 
-const validationSchema = Yup.object({
-  name: Yup.string().trim().required('Token address is required'),
-})
-
-const defaultValue = {
-  name: '',
-  file: '' as any,
-}
-
 export const ViewFileDialog: FC<IViewFileDialogProps> = (props) => {
   const { open, data, onClose, onSuccess } = props
   const [csvData, setCsvData] = useState(null)
@@ -68,7 +59,7 @@ export const ViewFileDialog: FC<IViewFileDialogProps> = (props) => {
         className: 'rounded-[16px]',
       }}
     >
-      <DialogTitle className="font-bold">Upload File</DialogTitle>
+      <DialogTitle className="font-bold">View File</DialogTitle>
       <DialogContent>
         <div className="space-y-[12px]">
           {data ? (
