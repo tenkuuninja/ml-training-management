@@ -1,3 +1,5 @@
+import datetime
+import os
 from flask import Flask, request, jsonify
 import numpy as np
 import pandas as pd
@@ -61,13 +63,15 @@ def training():
 
 
   # Lưu mô hình đã huấn luyện
-  with open('linear_regression_model.pkl', 'wb') as model_file:
+  model_filename = os.path.join("E:/MCLN/ml-training-management/Trained/",f'linear_regression_model_{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}.pkl')
+  with open(model_filename, 'wb') as model_file:
     pickle.dump(model, model_file)
 
 
  # Trả về kết quả và các độ đo của mô hình
   return jsonify({
     'message': 'Mô hình đã được huấn luyện và lưu thành công.',
+    'model_filename': model_filename
     'best_training_loss': train_loss,
     'best_test_loss': test_loss,
   })

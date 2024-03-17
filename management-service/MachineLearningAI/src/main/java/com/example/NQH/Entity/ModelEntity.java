@@ -25,6 +25,8 @@ public class ModelEntity extends BaseEntity{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	String linkModel;
+	
 	float bestTestLoss ;
 	
 	float bestTraingingLoss;

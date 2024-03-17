@@ -29,13 +29,13 @@ public class handleFileUploadAPI {
 	private final CSVService csvService;
 	
 	@PostMapping("/upload")
-	public void handleFileUpload(@RequestParam("file") MultipartFile file,@RequestBody FileDTO data) throws IOException {
+	public void handleFileUpload(@RequestParam("file") MultipartFile file,@RequestParam("name")String  data) throws IOException {
 		uploadCSVService.UploadFile(file);
 		
 //		log.info(file.getOriginalFilename());
 		
 	String linkFiels = new String("E:/MCLN/ml-training-management/Dataset/" + file.getOriginalFilename());
 	
-		csvService.readCSVAndSaveLabels(linkFiels,data.getName());
+		csvService.readCSVAndSaveLabels(linkFiels,data);
 	}
 }
