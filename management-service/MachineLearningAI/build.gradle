@@ -32,6 +32,10 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation group: 'com.google.apis', name: 'google-api-services-drive', version: 'v3-rev197-1.25.0'
+	// https://mvnrepository.com/artifact/io.projectreactor/reactor-core
+	implementation group: 'io.projectreactor', name: 'reactor-core', version: '3.6.4'
+	// https://mvnrepository.com/artifact/org.springframework/spring-webflux
+	implementation group: 'org.springframework', name: 'spring-webflux', version: '6.1.5'
 	
 }
 
