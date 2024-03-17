@@ -14,13 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class EvaluationEntity {
-	
-	
-	@ManyToOne
-    @JoinColumn(name = "model_id", nullable = false)
-	private ModelEntity model;
-	
+public class EvaluationEntity extends BaseEntity{
 	private float accuracy;
 	@Column 
 	private float precision_score;
@@ -36,5 +30,9 @@ public class EvaluationEntity {
 	private float mae;
 	@Column 
 	private double rsquared;
+	
+	@ManyToOne
+    @JoinColumn(name = "model_id", nullable = false)
+	private ModelEntity model;
 	
 }

@@ -2,6 +2,7 @@ package com.example.NQH.Entity;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,6 +36,8 @@ public class CSVEntity extends BaseEntity {
 	@Column
 	private String fileName;
 	
-	@OneToMany(mappedBy = "CSV")
-	private List<ModelEntity> evaluations;
+	@OneToMany(mappedBy = "CSV", cascade = CascadeType.ALL)
+	private List<ModelEntity> model;
+	
+	
 }

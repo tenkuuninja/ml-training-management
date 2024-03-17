@@ -13,7 +13,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="RequestData")
-public class RequestDataEntity {
+public class RequestDataEntity extends BaseEntity{
+	
 	private String trainFileLink;
     private String testFileLink;
     private String[] labelsFeatures;
