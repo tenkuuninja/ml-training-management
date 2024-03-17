@@ -3,6 +3,7 @@ import { FileApi } from '@/common/services'
 import {
   Button,
   IconButton,
+  Pagination,
   Paper,
   Table,
   TableBody,
@@ -16,6 +17,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { AiOutlineEdit } from 'react-icons/ai'
 import { BsEye, BsPen, BsPlus, BsTrash } from 'react-icons/bs'
 import { CreateOrUpdateFile } from './CreateOrUpdateFile'
+import { DeleteFileDialog } from './DeleteFileDialog'
 import { ViewFileDialog } from './ViewFileDialog'
 
 export const FileStorageListPage = () => {
@@ -50,7 +52,7 @@ export const FileStorageListPage = () => {
       </div>
 
       <TableContainer component={Paper} elevation={0} className="mt-[32px]">
-        <Table sx={{ minWidth: 650 }} size="medium" aria-label="a dense table">
+        <Table size="medium" className="min-h-[400px] w-full border-spacing-0">
           <TableHead className="bg-[#01B5DC]">
             <TableRow>
               <TableCell className="font-bold text-white">#</TableCell>
@@ -63,40 +65,73 @@ export const FileStorageListPage = () => {
               <TableCell className="font-bold text-white" align="right"></TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
-            {files.map((row, i) => (
-              <TableRow
-                key={i}
-                sx={(theme) => ({
-                  '&:nth-of-type(odd)': {
-                    backgroundColor: theme.palette.action.hover,
-                  },
-                  '&:last-child td, &:last-child th': {
-                    border: 0,
-                  },
-                })}
-              >
-                <TableCell component="th" scope="row">
-                  {1}
-                </TableCell>
-                <TableCell align="right">32132</TableCell>
-                <TableCell align="right">321321</TableCell>
-                <TableCell align="right">
-                  <IconButton color="info" onClick={() => setItemToShow(row)}>
-                    <BsEye />
-                  </IconButton>
-                  <IconButton color="warning" onClick={() => setItemToEdit(row)}>
-                    <AiOutlineEdit />
-                  </IconButton>
-                  <IconButton color="error" onClick={() => setItemToDelete(row)}>
-                    <BsTrash />
-                  </IconButton>
+          {!getFileRequest?.isPending && files?.length > 0 && (
+            <TableBody>
+              {files.map((row, i) => (
+                <TableRow
+                  key={i}
+                  sx={(theme) => ({
+                    '&:nth-of-type(odd)': {
+                      backgroundColor: theme.palette.action.hover,
+                    },
+                    '&:last-child td, &:last-child th': {
+                      border: 0,
+                    },
+                  })}
+                >
+                  <TableCell component="th" scope="row">
+                    {row?.id}
+                  </TableCell>
+                  <TableCell align="right">{row?.name}</TableCell>
+                  <TableCell align="right" className="line-clamp-1">
+                    {row?.labels}
+                  </TableCell>
+                  <TableCell align="right">
+                    <IconButton color="info" onClick={() => setItemToShow(row)}>
+                      <BsEye />
+                    </IconButton>
+                    <IconButton color="warning" onClick={() => setItemToEdit(row)}>
+                      <AiOutlineEdit />
+                    </IconButton>
+                    <IconButton color="error" onClick={() => setItemToDelete(row)}>
+                      <BsTrash />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          )}
+          {!getFileRequest?.isPending && files?.length === 0 && (
+            <TableBody>
+              <TableRow>
+                <TableCell
+                  component="th"
+                  scope="row"
+                  colSpan={4}
+                  className="text-center text-[60px] text-neutral-400"
+                >
+                  No Data
                 </TableCell>
               </TableRow>
-            ))}
-          </TableBody>
+            </TableBody>
+          )}
+          {getFileRequest?.isPending && (
+            <TableBody>
+              {[...new Array(10)]?.map((item, i) => (
+                <TableRow key={i}>
+                  <TableCell component="th" scope="row" colSpan={4} className="py-[4px]">
+                    <div className="h-[32px] animate-pulse bg-neutral-100"></div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          )}
         </Table>
       </TableContainer>
+
+      <div className="mt-[20px] flex justify-center">
+        <Pagination />
+      </div>
 
       <CreateOrUpdateFile
         open={openCreateDialog.value}
@@ -109,6 +144,13 @@ export const FileStorageListPage = () => {
         data={itemToEdit}
         isUpdate
         onClose={() => setItemToEdit(null)}
+        onSuccess={handleGetFileRequest}
+      />
+
+      <DeleteFileDialog
+        open={!!itemToDelete}
+        data={itemToDelete}
+        onClose={() => setItemToDelete(null)}
         onSuccess={handleGetFileRequest}
       />
 

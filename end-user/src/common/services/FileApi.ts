@@ -18,7 +18,8 @@ export class FileApi {
 
   static updateFile = async (payload: Record<string, any>) => {
     const path = '/CSV/' + payload?.id
-    const res = await instance.put(path, payload)
+    const formData = toFormData(payload)
+    const res = await instance.put(path, formData)
     return res?.data
   }
 

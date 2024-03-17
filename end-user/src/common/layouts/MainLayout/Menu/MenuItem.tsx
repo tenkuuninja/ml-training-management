@@ -34,10 +34,10 @@ const MenuItem = ({ icon, path, label, action }: MenuItemProps) => {
       sx={(theme) => ({
         paddingLeft: '24px',
         ':hover': {
-          backgroundColor: theme.palette.primary.light,
+          backgroundColor: '#B9EEFF20',
         },
         '&.Mui-selected': {
-          backgroundColor: theme.palette.primary.light,
+          backgroundColor: 'linear-gradient(90deg,#B9EEFF 52%,#01C2FF)',
           borderRight: `3px solid ${theme.palette.primary.dark}`,
         },
         '& .MuiTouchRipple-child': {

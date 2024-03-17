@@ -1,22 +1,15 @@
 import Dialog from '@/common/components/Dialog'
 import {
-  FormProvider,
-  RHFDateTimePicker,
-  RHFTextField,
+  FormProvider, RHFTextField
 } from '@/common/components/MuiHookForm'
-import { RHFCheckbox } from '@/common/components/MuiHookForm/RHFCheckbox'
-import NumericFormatInput from '@/common/components/MuiInput/NumericFormatInput'
-import { AIRDROP_CONTRACT_ADDRESS } from '@/common/constants/contract'
 import { useBoolean } from '@/common/hooks/useBoolean'
 import { FileApi } from '@/common/services'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
-import { DialogActions, DialogContent, DialogTitle, Grid } from '@mui/material'
-import dayjs from 'dayjs'
+import { DialogActions, DialogContent, DialogTitle } from '@mui/material'
 import { FC, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { BsPlus } from 'react-icons/bs'
-import { GoAlertFill } from 'react-icons/go'
 import { toast } from 'react-toastify'
 import * as Yup from 'yup'
 
@@ -54,15 +47,14 @@ export const CreateOrUpdateFile: FC<ICreateOrUpdateFileProps> = (props) => {
     try {
       if (isUpdate) {
         await FileApi.updateFile(values)
-        toast.success('Create update successful')
       } else {
         await FileApi.uploadFile(values)
       }
       onClose()
       onSuccess && onSuccess()
-      toast.success(isUpdate ? 'Update' : 'Create' + ' file successful')
+      toast.success((isUpdate ? 'Update' : 'Create') + ' file successful')
     } catch (error) {
-      toast.error(isUpdate ? 'Update' : 'Create' + ' file failed')
+      toast.error((isUpdate ? 'Update' : 'Create') + ' file failed')
       console.error('handleSubmit', error)
     }
   }
