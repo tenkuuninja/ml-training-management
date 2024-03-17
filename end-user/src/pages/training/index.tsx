@@ -1,10 +1,10 @@
 import { MainLayout } from '@/common/layouts/MainLayout'
-import { FileStorageListPage } from '@/modules/FileStorage/FileStorageListPage'
+import { TrainingListPage } from '@/modules/Traning/TrainingListPage'
 
 export default function Page() {
   return (
     <>
-      <FileStorageListPage />
+      <TrainingListPage />
     </>
   )
 }

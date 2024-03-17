@@ -16,11 +16,11 @@ import { useMutation } from '@tanstack/react-query'
 import { useCallback, useEffect, useState } from 'react'
 import { AiOutlineEdit } from 'react-icons/ai'
 import { BsEye, BsPen, BsPlus, BsTrash } from 'react-icons/bs'
-import { CreateOrUpdateFile } from './CreateOrUpdateFile'
-import { DeleteFileDialog } from './DeleteFileDialog'
-import { ViewFileDialog } from './ViewFileDialog'
+import { CreateOrUpdateTrainingDialog } from './CreateOrUpdateTrainingDialog'
+import { DeleteTrainingDialog } from './DeleteTrainingDialog'
+import { ViewTrainingDialog } from './ViewTrainingDialog'
 
-export const FileStorageListPage = () => {
+export const TrainingListPage = () => {
   const getFileRequest = useMutation({ mutationFn: FileApi.getListFile })
   const openCreateDialog = useBoolean()
   const [itemToShow, setItemToShow] = useState(null)
@@ -52,14 +52,14 @@ export const FileStorageListPage = () => {
       </div>
 
       <TableContainer component={Paper} elevation={0} className="mt-[32px]">
-        <Table size="medium" className="w-full border-spacing-0">
+        <Table size="medium" className="min-h-[400px] w-full border-spacing-0">
           <TableHead className="bg-[#01B5DC]">
             <TableRow>
               <TableCell className="font-bold text-white">#</TableCell>
               <TableCell className="font-bold text-white" align="right">
                 Name
               </TableCell>
-              <TableCell className="max-w-[50%] font-bold text-white" align="center">
+              <TableCell className="font-bold text-white" align="right">
                 Labels
               </TableCell>
               <TableCell className="font-bold text-white" align="right"></TableCell>
@@ -71,8 +71,8 @@ export const FileStorageListPage = () => {
                 <TableRow
                   key={i}
                   sx={(theme) => ({
-                    '&:nth-of-type(even)': {
-                      backgroundColor: '#D9D9D920',
+                    '&:nth-of-type(odd)': {
+                      backgroundColor: theme.palette.action.hover,
                     },
                     '&:last-child td, &:last-child th': {
                       border: 0,
@@ -86,7 +86,7 @@ export const FileStorageListPage = () => {
                   <TableCell align="right" className="line-clamp-1">
                     {row?.labels}
                   </TableCell>
-                  <TableCell align="right" className="whitespace-nowrap">
+                  <TableCell align="right">
                     <IconButton color="info" onClick={() => setItemToShow(row)}>
                       <BsEye />
                     </IconButton>
@@ -133,28 +133,30 @@ export const FileStorageListPage = () => {
         <Pagination />
       </div>
 
-      <CreateOrUpdateFile
+      <CreateOrUpdateTrainingDialog
         open={openCreateDialog.value}
+        files={files}
         onClose={openCreateDialog.setFalse}
         onSuccess={handleGetFileRequest}
       />
 
-      <CreateOrUpdateFile
+      <CreateOrUpdateTrainingDialog
         open={!!itemToEdit}
         data={itemToEdit}
+        files={files}
         isUpdate
         onClose={() => setItemToEdit(null)}
         onSuccess={handleGetFileRequest}
       />
 
-      <DeleteFileDialog
+      <DeleteTrainingDialog
         open={!!itemToDelete}
         data={itemToDelete}
         onClose={() => setItemToDelete(null)}
         onSuccess={handleGetFileRequest}
       />
 
-      <ViewFileDialog
+      <ViewTrainingDialog
         open={!!itemToShow}
         data={itemToShow}
         onClose={() => setItemToShow(null)}
