@@ -1,11 +1,13 @@
 package com.example.NQH.Service.impliments;
 
+import org.springframework.stereotype.Service;
+
 import com.example.NQH.Entity.ModelEntity;
 import com.example.NQH.Repository.ModelRepository;
 import com.example.NQH.Service.ModelService;
 
 import lombok.RequiredArgsConstructor;
-
+@Service
 @RequiredArgsConstructor
 public class ModelServiceImp implements ModelService{
 	

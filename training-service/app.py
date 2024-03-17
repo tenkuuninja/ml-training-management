@@ -3,8 +3,8 @@ import os
 from flask import Flask, request, jsonify
 import numpy as np
 import pandas as pd
-from sklearn.base import r2_score
-from sklearn.metrics import f1_score, mean_absolute_error, mean_squared_error
+
+from sklearn.metrics import f1_score, mean_absolute_error, mean_squared_error,r2_score
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 import pickle
@@ -71,7 +71,7 @@ def training():
  # Trả về kết quả và các độ đo của mô hình
   return jsonify({
     'message': 'Mô hình đã được huấn luyện và lưu thành công.',
-    'model_filename': model_filename
+    'model_filename': model_filename,
     'best_training_loss': train_loss,
     'best_test_loss': test_loss,
   })

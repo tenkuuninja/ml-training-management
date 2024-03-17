@@ -33,7 +33,6 @@ public class TrainingAPI {
 				response -> {
 					modelService.addModel(response.getModelFilename(), response.getBestTestLoss(),
 							response.getBestTrainingLoss());
-
 				}
 
 		);
