@@ -3,6 +3,7 @@ package com.example.NQH.Service.impliments;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.example.NQH.Entity.FlaskResponseEntity;
 import com.example.NQH.Entity.RequestDataEntity;
 import com.example.NQH.Service.FlaskApiService;
 
@@ -16,7 +17,7 @@ public class FlaskApiServiceImp implements FlaskApiService {
 	private final WebClient.Builder webClientBuilder;;
 
 	@Override
-	public Mono<String> callFlaskApi(String trainFileLink, String testFileLink, String[] labelsFeatures,
+	public Mono<FlaskResponseEntity> callFlaskApi(String trainFileLink, String testFileLink, String[] labelsFeatures,
 			String labelTarget) {
 		String flaskApiUrl = "http://localhost:5000/train";
 		RequestDataEntity requestData = new RequestDataEntity(trainFileLink, testFileLink, labelsFeatures, labelTarget);
@@ -25,6 +26,6 @@ public class FlaskApiServiceImp implements FlaskApiService {
 				.uri(flaskApiUrl)
 				.bodyValue(requestData)
 				.retrieve()
-				.bodyToMono(String.class);
+				.bodyToMono(FlaskResponseEntity.class);
 	}
 }

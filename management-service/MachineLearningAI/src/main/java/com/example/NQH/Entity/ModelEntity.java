@@ -13,6 +13,7 @@ import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 
 @Entity
@@ -22,14 +23,15 @@ import lombok.Setter;
 @Setter
 public class ModelEntity extends BaseEntity{
 	@Id
+	@NonNull
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	String linkModel;
+	private String linkModel;
 	
-	float bestTestLoss ;
+	private double bestTestLoss ;
 	
-	float bestTraingingLoss;
+	private double bestTraingingLoss;
 	
 	@ManyToOne
     @JoinColumn(name = "CSV_id", nullable = false)

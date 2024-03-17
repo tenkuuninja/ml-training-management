@@ -2,39 +2,42 @@ package com.example.NQH.API;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.NQH.API.DTO.TrainingDTO;
-import com.example.NQH.Entity.ModelEntity;
+import com.example.NQH.Entity.FlaskResponseEntity;
+
 import com.example.NQH.Service.FlaskApiService;
+import com.example.NQH.Service.ModelService;
 
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
 
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RequiredArgsConstructor
 @RestController
 public class TrainingAPI {
 	private final FlaskApiService flaskApiService;
-	
+	private final ModelService modelService;
+
 	@PostMapping("/training")
-	public String Training(@RequestParam("fileTrain") String linkFileTrain,
-						   @RequestParam("fileTest") String linkFileTest ,
-						   @RequestParam("featureLabels") String[] featureLabels,
-						   @RequestParam("targetLabel") String targetLabel   ) {
-		
-		Mono<String> result = flaskApiService.callFlaskApi(linkFileTrain,linkFileTest ,featureLabels,targetLabel );
-		
+	public void Training(@RequestParam("fileTrain") String linkFileTrain,
+			@RequestParam("fileTest") String linkFileTest,
+			@RequestParam("featureLabels") String[] featureLabels,
+			@RequestParam("targetLabel") String targetLabel) {
+
+		Mono<FlaskResponseEntity> result = flaskApiService.callFlaskApi(linkFileTrain, linkFileTest, featureLabels,
+				targetLabel);
+
 		result.subscribe(
-			response	-> {
-				
-			}
-				
-				
-				);
-		return null;
-		
+				response -> {
+					modelService.addModel(response.getModelFilename(), response.getBestTestLoss(),
+							response.getBestTrainingLoss());
+
+				}
+
+		);
+
 	}
-	
+
 }

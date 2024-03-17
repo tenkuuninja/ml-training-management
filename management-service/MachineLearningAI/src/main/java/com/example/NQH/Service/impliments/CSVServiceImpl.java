@@ -77,7 +77,7 @@ public class CSVServiceImpl implements CSVService {
 	@Override
 	public CSVEntity updateCSV(Long id,String name) {
 		CSVEntity csv = datasetRepository.findById(id).get();
-		csv.setFileName(name);
+		csv.setName(name);
 		datasetRepository.save(csv);
 		return csv;
 	}

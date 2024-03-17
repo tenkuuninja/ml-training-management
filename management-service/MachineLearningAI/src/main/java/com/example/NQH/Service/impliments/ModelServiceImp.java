@@ -1,9 +1,24 @@
 package com.example.NQH.Service.impliments;
 
 import com.example.NQH.Entity.ModelEntity;
+import com.example.NQH.Repository.ModelRepository;
 import com.example.NQH.Service.ModelService;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 public class ModelServiceImp implements ModelService{
-	public ModelEntity add ;
+	
+	private final ModelRepository modelRepository;
+	@Override
+	public ModelEntity addModel(String link,double testLoss,double trainLoss) {
+		ModelEntity model = new ModelEntity();
+		model.setBestTestLoss(testLoss);
+		model.setBestTestLoss(trainLoss);
+		model.setLinkModel(link);
+		return modelRepository.save(model);
+		
+	}
+	
 	
 }
