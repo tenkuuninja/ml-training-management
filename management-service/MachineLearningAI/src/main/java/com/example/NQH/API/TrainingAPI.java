@@ -35,7 +35,6 @@ public class TrainingAPI {
 					modelService.addModel(response.getModelFilename(), response.getBestTestLoss(),
 							response.getBestTrainingLoss(),name);
 				}
-
 		);
 
 	}
