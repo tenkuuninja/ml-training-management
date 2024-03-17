@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.apache.commons.csv.CSVFormat;
@@ -11,6 +12,7 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.NQH.Entity.CSVEntity;
 import com.example.NQH.Repository.DatasetRepository;
@@ -28,7 +30,13 @@ public class CSVServiceImpl implements CSVService {
 	private final DatasetRepository datasetRepository;
 
 	@Override
-	public void readCSVAndSaveLabels(String filePath,String fileName) throws IOException {
+	public void readCSVAndSaveLabels(String fileName,String name) throws IOException {
+
+		String path = Paths.get("").toAbsolutePath().toString() + "/public/Dataset/";
+		String filePath = new String(path + fileName);
+		String homeURL = ServletUriComponentsBuilder.fromCurrentContextPath().toUriString();
+		String fileLink = homeURL + "/files/" + fileName;
+		
 		StringBuilder labelsBuilder = new StringBuilder();
 		try (
 				Reader reader = new FileReader(filePath);
@@ -46,9 +54,9 @@ public class CSVServiceImpl implements CSVService {
 			File file = new File(filePath);
 			CSVEntity dataset = new CSVEntity();
 			dataset.setFileName(file.getName());
-			dataset.setLink(filePath);
+			dataset.setLink(fileLink);
 			dataset.setLabels(labels);
-			dataset.setName(fileName);
+			dataset.setName(name);
 
 //			log.info(labels);
 

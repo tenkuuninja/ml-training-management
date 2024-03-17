@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Paths;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,9 +34,9 @@ public class handleFileUploadAPI {
 		uploadCSVService.UploadFile(file);
 		
 //		log.info(file.getOriginalFilename());
-		
-	String linkFiels = new String("E:/MCLN/ml-training-management/Dataset/" + file.getOriginalFilename());
+
+		String fileName = file.getOriginalFilename();
 	
-		csvService.readCSVAndSaveLabels(linkFiels,data);
+		csvService.readCSVAndSaveLabels(fileName, data);
 	}
 }

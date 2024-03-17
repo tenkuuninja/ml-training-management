@@ -1,7 +1,14 @@
 package com.example.NQH.API;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -51,4 +58,23 @@ public class CSVApi {
 		CSVEntity CSV = csvService.deleteCSV(id);
 		return ResponseEntity.ok().body(CSV);
 	}
+	
+	@GetMapping("/files/{fileName}")
+    public ResponseEntity<Resource> getFile(@PathVariable("fileName") String fileName) throws IOException {
+		String path = Paths.get("").toAbsolutePath().toString() + "/public/Dataset/";
+        File file = new File(path + fileName);
+        
+        if (!file.exists()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
+        byte[] fileContent = Files.readAllBytes(file.toPath());
+        ByteArrayResource resource = new ByteArrayResource(fileContent);
+
+        return ResponseEntity.ok()
+                .contentLength(fileContent.length)
+                .header("Content-type", "application/octet-stream")
+                .header("Content-disposition", "attachment; filename=\"" + fileName + "\"")
+                .body(resource);
+    }
 }
