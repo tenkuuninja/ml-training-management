@@ -13,11 +13,12 @@ public class ModelServiceImp implements ModelService{
 	
 	private final ModelRepository modelRepository;
 	@Override
-	public ModelEntity addModel(String link,double testLoss,double trainLoss) {
+	public ModelEntity addModel(String link,double testLoss,double trainLoss,String name) {
 		ModelEntity model = new ModelEntity();
 		model.setBestTestLoss(testLoss);
 		model.setBestTestLoss(trainLoss);
 		model.setLinkModel(link);
+		model.setName(name);
 		return modelRepository.save(model);
 		
 	}

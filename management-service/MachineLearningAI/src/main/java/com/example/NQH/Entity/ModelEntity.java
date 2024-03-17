@@ -22,10 +22,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ModelEntity extends BaseEntity{
-	@Id
-	@NonNull
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+
+	private String name;
 	
 	private String linkModel;
 	

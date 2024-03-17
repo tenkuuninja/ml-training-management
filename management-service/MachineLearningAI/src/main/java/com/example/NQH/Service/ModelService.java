@@ -7,6 +7,6 @@ import com.example.NQH.Entity.ModelEntity;
 
 public interface ModelService {
 
-	ModelEntity addModel(String link, double d, double e);
+	ModelEntity addModel(String link, double d, double e,String name);
 
 }

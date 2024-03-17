@@ -45,7 +45,7 @@ public class CSVServiceImpl implements CSVService {
 				// Assume that the first row contains labels
 				for (String label : csvRecord) {
 					labelsBuilder.append(label);
-					labelsBuilder.append(" ");
+					labelsBuilder.append(",");
 				}
 				break;
 			}
