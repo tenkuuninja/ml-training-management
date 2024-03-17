@@ -24,7 +24,8 @@ public class TrainingAPI {
 	public void Training(@RequestParam("fileTrain") String linkFileTrain,
 			@RequestParam("fileTest") String linkFileTest,
 			@RequestParam("featureLabels") String[] featureLabels,
-			@RequestParam("targetLabel") String targetLabel) {
+			@RequestParam("targetLabel") String targetLabel,
+			@RequestParam("name") String name) {
 
 		Mono<FlaskResponseEntity> result = flaskApiService.callFlaskApi(linkFileTrain, linkFileTest, featureLabels,
 				targetLabel);
@@ -32,9 +33,8 @@ public class TrainingAPI {
 		result.subscribe(
 				response -> {
 					modelService.addModel(response.getModelFilename(), response.getBestTestLoss(),
-							response.getBestTrainingLoss());
+							response.getBestTrainingLoss(),name);
 				}
-
 		);
 
 	}
