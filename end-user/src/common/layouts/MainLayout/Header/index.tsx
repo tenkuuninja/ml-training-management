@@ -25,13 +25,13 @@ const AdminHeader = ({ toggleMenu }: any) => {
         className="flex cursor-pointer items-center leading-none"
         onClick={(e: any) => setAnchorEl(e?.currentTarget)}
       >
-        <div className="mr-2 hidden text-right lg:block">
+        {/* <div className="mr-2 hidden text-right lg:block">
           <p>{profile?.name}</p>
           <p className="text-sm text-red-400">{profile?.role}</p>
         </div>
         <div className="flex items-center justify-center">
           <AiOutlineUser className="text-[36px]" />
-        </div>
+        </div> */}
       </div>
       <Popover
         open={open}

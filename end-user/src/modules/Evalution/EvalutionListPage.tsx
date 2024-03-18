@@ -15,12 +15,12 @@ import {
 import { useMutation } from '@tanstack/react-query'
 import { useCallback, useEffect, useState } from 'react'
 import { AiOutlineEdit } from 'react-icons/ai'
-import { BsEye, BsPen, BsPlus, BsTrash } from 'react-icons/bs'
-import { CreateOrUpdateFile } from './CreateOrUpdateFile'
-import { DeleteFileDialog } from './DeleteFileDialog'
-import { ViewFileDialog } from './ViewFileDialog'
+import { BsEye, BsPlus, BsTrash } from 'react-icons/bs'
+import { CreateOrUpdateEvaluationDialog } from './CreateOrUpdateEvaluationDialog'
+import { DeleteEvaluationDialog } from './DeleteEvaluationDialog'
+import { ViewEvaluationDialog } from './ViewEvaluationDialog'
 
-export const FileStorageListPage = () => {
+export const EvaluationListPage = () => {
   const getFileRequest = useMutation({ mutationFn: FileApi.getListFile })
   const openCreateDialog = useBoolean()
   const [itemToShow, setItemToShow] = useState(null)
@@ -59,7 +59,7 @@ export const FileStorageListPage = () => {
               <TableCell className="font-bold text-white" align="right">
                 Name
               </TableCell>
-              <TableCell className="max-w-[50%] font-bold text-white" align="center">
+              <TableCell className="font-bold text-white" align="right">
                 Labels
               </TableCell>
               <TableCell className="font-bold text-white" align="right"></TableCell>
@@ -72,7 +72,7 @@ export const FileStorageListPage = () => {
                   key={i}
                   sx={(theme) => ({
                     '&:nth-of-type(even)': {
-                      backgroundColor: '#D9D9D920',
+                      backgroundColor: theme.palette.action.hover,
                     },
                     '&:last-child td, &:last-child th': {
                       border: 0,
@@ -133,13 +133,13 @@ export const FileStorageListPage = () => {
         <Pagination />
       </div>
 
-      <CreateOrUpdateFile
+      <CreateOrUpdateEvaluationDialog
         open={openCreateDialog.value}
         onClose={openCreateDialog.setFalse}
         onSuccess={handleGetFileRequest}
       />
 
-      <CreateOrUpdateFile
+      <CreateOrUpdateEvaluationDialog
         open={!!itemToEdit}
         data={itemToEdit}
         isUpdate
@@ -147,14 +147,14 @@ export const FileStorageListPage = () => {
         onSuccess={handleGetFileRequest}
       />
 
-      <DeleteFileDialog
+      <DeleteEvaluationDialog
         open={!!itemToDelete}
         data={itemToDelete}
         onClose={() => setItemToDelete(null)}
         onSuccess={handleGetFileRequest}
       />
 
-      <ViewFileDialog
+      <ViewEvaluationDialog
         open={!!itemToShow}
         data={itemToShow}
         onClose={() => setItemToShow(null)}

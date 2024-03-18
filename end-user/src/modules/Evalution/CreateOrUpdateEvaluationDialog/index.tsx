@@ -13,7 +13,7 @@ import { BsPlus } from 'react-icons/bs'
 import { toast } from 'react-toastify'
 import * as Yup from 'yup'
 
-interface ICreateOrUpdateFileProps {
+interface ICreateOrUpdateEvaluationDialogProps {
   open: boolean
   data?: any
   isUpdate?: boolean
@@ -30,7 +30,7 @@ const defaultValue = {
   file: '' as any,
 }
 
-export const CreateOrUpdateFile: FC<ICreateOrUpdateFileProps> = (props) => {
+export const CreateOrUpdateEvaluationDialog: FC<ICreateOrUpdateEvaluationDialogProps> = (props) => {
   const { open, data, isUpdate, onClose, onSuccess } = props
   const drag = useBoolean()
 
@@ -41,7 +41,7 @@ export const CreateOrUpdateFile: FC<ICreateOrUpdateFileProps> = (props) => {
   const values = form.watch()
   const { errors, isSubmitting } = form.formState
 
-  console.log('CreateOrUpdateFile', values, errors)
+  console.log('CreateOrUpdateEvaluationDialog', values, errors)
 
   const handleSubmit = async ({ ...values }: typeof defaultValue) => {
     try {

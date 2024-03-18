@@ -15,12 +15,12 @@ import {
 import { useMutation } from '@tanstack/react-query'
 import { useCallback, useEffect, useState } from 'react'
 import { AiOutlineEdit } from 'react-icons/ai'
-import { BsEye, BsPen, BsPlus, BsTrash } from 'react-icons/bs'
-import { CreateOrUpdateFile } from './CreateOrUpdateFile'
-import { DeleteFileDialog } from './DeleteFileDialog'
-import { ViewFileDialog } from './ViewFileDialog'
+import { BsEye, BsPlus, BsTrash } from 'react-icons/bs'
+import { CreateOrUpdateTrainingDialog } from './CreateOrUpdateTrainingDialog'
+import { DeleteTrainingDialog } from './DeleteTrainingDialog'
+import { ViewTrainingDialog } from './ViewTrainingDialog'
 
-export const FileStorageListPage = () => {
+export const TrainingListPage = () => {
   const getFileRequest = useMutation({ mutationFn: FileApi.getListFile })
   const openCreateDialog = useBoolean()
   const [itemToShow, setItemToShow] = useState(null)
@@ -59,8 +59,11 @@ export const FileStorageListPage = () => {
               <TableCell className="font-bold text-white" align="right">
                 Name
               </TableCell>
-              <TableCell className="max-w-[50%] font-bold text-white" align="center">
-                Labels
+              <TableCell className="font-bold text-white" align="center">
+                Best training loss
+              </TableCell>
+              <TableCell className="font-bold text-white" align="center">
+                Best test loss
               </TableCell>
               <TableCell className="font-bold text-white" align="right"></TableCell>
             </TableRow>
@@ -72,7 +75,7 @@ export const FileStorageListPage = () => {
                   key={i}
                   sx={(theme) => ({
                     '&:nth-of-type(even)': {
-                      backgroundColor: '#D9D9D920',
+                      backgroundColor: theme.palette.action.hover,
                     },
                     '&:last-child td, &:last-child th': {
                       border: 0,
@@ -83,9 +86,8 @@ export const FileStorageListPage = () => {
                     {row?.id}
                   </TableCell>
                   <TableCell align="right">{row?.name}</TableCell>
-                  <TableCell align="right" className="line-clamp-1">
-                    {row?.labels}
-                  </TableCell>
+                  <TableCell align="right" className=""></TableCell>
+                  <TableCell align="right" className=""></TableCell>
                   <TableCell align="right" className="whitespace-nowrap">
                     <IconButton color="info" onClick={() => setItemToShow(row)}>
                       <BsEye />
@@ -133,28 +135,30 @@ export const FileStorageListPage = () => {
         <Pagination />
       </div>
 
-      <CreateOrUpdateFile
+      <CreateOrUpdateTrainingDialog
         open={openCreateDialog.value}
+        files={files}
         onClose={openCreateDialog.setFalse}
         onSuccess={handleGetFileRequest}
       />
 
-      <CreateOrUpdateFile
+      <CreateOrUpdateTrainingDialog
         open={!!itemToEdit}
         data={itemToEdit}
+        files={files}
         isUpdate
         onClose={() => setItemToEdit(null)}
         onSuccess={handleGetFileRequest}
       />
 
-      <DeleteFileDialog
+      <DeleteTrainingDialog
         open={!!itemToDelete}
         data={itemToDelete}
         onClose={() => setItemToDelete(null)}
         onSuccess={handleGetFileRequest}
       />
 
-      <ViewFileDialog
+      <ViewTrainingDialog
         open={!!itemToShow}
         data={itemToShow}
         onClose={() => setItemToShow(null)}

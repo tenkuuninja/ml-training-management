@@ -15,14 +15,23 @@ import { FC, useEffect, useState } from 'react'
 import { readRemoteFile } from 'react-papaparse'
 import * as Yup from 'yup'
 
-interface IViewFileDialogProps {
+interface IViewEvaluationDialogProps {
   open: boolean
   data?: any
   onClose: VoidFunction
   onSuccess?: VoidFunction
 }
 
-export const ViewFileDialog: FC<IViewFileDialogProps> = (props) => {
+const validationSchema = Yup.object({
+  name: Yup.string().trim().required('Token address is required'),
+})
+
+const defaultValue = {
+  name: '',
+  file: '' as any,
+}
+
+export const ViewEvaluationDialog: FC<IViewEvaluationDialogProps> = (props) => {
   const { open, data, onClose, onSuccess } = props
   const [csvData, setCsvData] = useState(null)
   const loading = useBoolean(true)
@@ -59,7 +68,7 @@ export const ViewFileDialog: FC<IViewFileDialogProps> = (props) => {
         className: 'rounded-[16px]',
       }}
     >
-      <DialogTitle className="font-bold">View File</DialogTitle>
+      <DialogTitle className="font-bold">Upload File</DialogTitle>
       <DialogContent>
         <div className="space-y-[12px]">
           {data ? (
