@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import com.example.NQH.Entity.CSVEntity;
 @Repository
-public interface DatasetRepository extends JpaRepository<CSVEntity, Long>{	
+public interface CSVRepository extends JpaRepository<CSVEntity, Long>{	
 	Optional<CSVEntity> findById(Long id);
 }

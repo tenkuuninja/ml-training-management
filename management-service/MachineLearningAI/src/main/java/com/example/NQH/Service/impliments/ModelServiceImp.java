@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.NQH.Entity.CSVEntity;
 import com.example.NQH.Entity.ModelEntity;
 import com.example.NQH.Repository.ModelRepository;
 import com.example.NQH.Service.ModelService;
@@ -23,9 +22,7 @@ public class ModelServiceImp implements ModelService{
 		model.setLinkModel(link);
 		model.setName(name);
 		return modelRepository.save(model);
-		
 	}
-	
 	@Override
 	public ModelEntity getModel(Long id) {
 		return modelRepository.findById(id).get();

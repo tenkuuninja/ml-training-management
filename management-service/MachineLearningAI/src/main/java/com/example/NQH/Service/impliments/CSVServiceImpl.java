@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.NQH.Entity.CSVEntity;
-import com.example.NQH.Repository.DatasetRepository;
+import com.example.NQH.Repository.CSVRepository;
 import com.example.NQH.Service.CSVService;
 
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 
 public class CSVServiceImpl implements CSVService {
 
-	private final DatasetRepository datasetRepository;
+	private final CSVRepository cSVRepository;
 
 	@Override		
 	public void readCSVAndSaveLabels(String fileName,String name) throws IOException {
@@ -49,7 +49,7 @@ public class CSVServiceImpl implements CSVService {
 				break;
 			}
 			String labels = labelsBuilder.toString();
-
+			
 			File file = new File(filePath);
 			CSVEntity dataset = new CSVEntity();
 			dataset.setFileName(file.getName());
@@ -59,35 +59,32 @@ public class CSVServiceImpl implements CSVService {
 
 //			log.info(labels);
 
-			datasetRepository.save(dataset);
+			cSVRepository.save(dataset);
 		}
 	}
 
 	@Override
 	public CSVEntity getCSV(Long id) {
-		return datasetRepository.findById(id).get();
+		return cSVRepository.findById(id).get();
 	}
 
 	@Override
 	public List<CSVEntity> getAllCSV() {
-		return datasetRepository.findAll();
+		return cSVRepository.findAll();
 	}
 	
 	@Override
 	public CSVEntity updateCSV(Long id,String name) {
-		CSVEntity csv = datasetRepository.findById(id).get();
+		CSVEntity csv = cSVRepository.findById(id).get();
 		csv.setName(name);
-		datasetRepository.save(csv);
+		cSVRepository.save(csv);
 		return csv;
 	}
 
 	@Override 
 	public CSVEntity deleteCSV(Long id) {
-		CSVEntity csv = datasetRepository.findById(id).get();
-		datasetRepository.delete(csv);;
+		CSVEntity csv = cSVRepository.findById(id).get();
+		cSVRepository.delete(csv);;
 		return csv;
 	}
-	
-	
-
 }

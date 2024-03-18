@@ -3,7 +3,8 @@ import os
 from flask import Flask, request, jsonify
 import numpy as np
 import pandas as pd
-
+import random
+from sklearn.calibration import LabelEncoder
 from sklearn.metrics import f1_score, mean_absolute_error, mean_squared_error,r2_score
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
@@ -15,13 +16,14 @@ app = Flask("Training Service")
 def hello_world():
   return "Hello world"
 
-@app.route("/training", methods = ['POST'])
+@app.route("/training", methods = ['POST']) 
 def training():
 
   #Nhận link file
   train_file_link = request.json.get('train_file_link')
   test_file_link = request.json.get('test_file_link')
 
+  label_encoder = LabelEncoder()
    # Đọc dữ liệu từ tệp CSV huấn luyện
   try:
     train_data = pd.read_csv(train_file_link)
@@ -34,11 +36,23 @@ def training():
   except Exception as e:
     return jsonify({'error': str(e)})
   
+
+  for col in train_data.columns:
+    if train_data[col].dtype == 'object':  # Kiểm tra kiểu dữ liệu của cột (kí tự)
+        train_data[col] = label_encoder.fit_transform(train_data[col])
+
+  for col in test_data.columns:
+    if test_data[col].dtype == 'object':
+        test_data[col] = label_encoder.fit_transform(test_data[col])
+  
+
+
+  
   # Nhận labels features và label target từ request
   labels_features = request.json.get('labels_features')
   label_target = request.json.get('label_target')
 
-   # Lấy features và target từ tập huấn luyện
+  # Lấy features và target từ tập huấn luyện
   X_train = train_data[labels_features]
   y_train = train_data[label_target]
 
@@ -46,7 +60,7 @@ def training():
   X_test = test_data[labels_features]
   y_test = test_data[label_target]
 
-   # Huấn luyện mô hình hồi quy tuyến tính
+  # Huấn luyện mô hình hồi quy tuyến tính
   model = LinearRegression()
   model.fit(X_train, y_train)
 
@@ -63,7 +77,7 @@ def training():
 
 
   # Lưu mô hình đã huấn luyện
-  model_filename = os.path.join("E:/MCLN/ml-training-management/Trained/",f'linear_regression_model_{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}.pkl')
+  model_filename = os.path.join("E:/MCLN/ml-training-management/Trained/",f'linear_regression_model_{random.randint(1, 10)}.pkl')
   with open(model_filename, 'wb') as model_file:
     pickle.dump(model, model_file)
 

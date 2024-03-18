@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.NQH.Entity.CSVEntity;
-import com.example.NQH.Repository.DatasetRepository;
+import com.example.NQH.Repository.CSVRepository;
 import com.example.NQH.Service.CSVService;
 
 import lombok.RequiredArgsConstructor;
@@ -30,7 +30,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 public class CSVApi {
 	public final CSVService csvService;
-	public final DatasetRepository datasetRepository;
+	public final CSVRepository cSVRepository;
 	
 	@GetMapping("/CSV/{id}")
 	public ResponseEntity<CSVEntity> CSV(@PathVariable("id") Long id){
