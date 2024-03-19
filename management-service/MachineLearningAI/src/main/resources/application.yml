@@ -3,9 +3,9 @@ server:
   
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/machinelearning
+    url: jdbc:mysql://localhost:3301/machinelearning
     username: root
-    password: root
+    password: 08112001
 #    driver-class-name: com.mysql.jdbc.Driver
   jpa:
     hibernate:

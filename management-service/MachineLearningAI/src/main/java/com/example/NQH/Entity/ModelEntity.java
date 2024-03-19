@@ -28,7 +28,7 @@ public class ModelEntity extends BaseEntity{
 	private double bestTraingingLoss;
 	
 	@ManyToOne
-    @JoinColumn(name = "CSV_id", nullable = false)
+    @JoinColumn(name = "CSV_id")
 	private CSVEntity CSV;
 	
 	@OneToMany(mappedBy = "model", cascade = CascadeType.ALL)

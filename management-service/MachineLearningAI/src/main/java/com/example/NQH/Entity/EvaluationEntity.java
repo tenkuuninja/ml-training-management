@@ -28,7 +28,7 @@ public class EvaluationEntity extends BaseEntity{
 	private double rsquared;
 	
 	@ManyToOne
-    @JoinColumn(name = "model_id", nullable = false)
+    @JoinColumn(name = "model_id")
 	private ModelEntity model;
 	
 }

@@ -1,4 +1,5 @@
 import datetime
+import logging
 import os
 from flask import Flask, request, jsonify
 import numpy as np
@@ -19,9 +20,15 @@ def hello_world():
 @app.route("/training", methods = ['POST']) 
 def training():
 
+ 
+
+
   #Nhận link file
   train_file_link = request.json.get('train_file_link')
   test_file_link = request.json.get('test_file_link')
+
+  print(f"train_file_link:{train_file_link}" )
+  print(f"test_file_link: {test_file_link}")
 
   label_encoder = LabelEncoder()
    # Đọc dữ liệu từ tệp CSV huấn luyện
@@ -30,12 +37,14 @@ def training():
   except Exception as e:
     return jsonify({'error': str(e)})
 
+  print(f" train_data{ train_data}")
+
   # Đọc dữ liệu từ tệp CSV kiểm tra
   try:
     test_data = pd.read_csv(test_file_link)
   except Exception as e:
     return jsonify({'error': str(e)})
-  
+  print(f"test_data:{test_data}")
 
   for col in train_data.columns:
     if train_data[col].dtype == 'object':  # Kiểm tra kiểu dữ liệu của cột (kí tự)
@@ -77,14 +86,22 @@ def training():
 
 
   # Lưu mô hình đã huấn luyện
-  model_filename = os.path.join("E:/MCLN/ml-training-management/Trained/",f'linear_regression_model_{random.randint(1, 10)}.pkl')
+  model_filename = os.path.join("E:/MCLN/ml-training-management/Trained/",f'linear_regression_model_{random.randint(1, 10000)}.pkl')
   with open(model_filename, 'wb') as model_file:
     pickle.dump(model, model_file)
 
 
+  # logging.basicConfig(filename='E:/1.txt', level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+  
+  # logging.debug('This is a debug message')
+  # logging.info('This is an info message')
+  # logging.warning('This is a warning message')
+  # logging.error('This is an error message')
+  # logging.critical('This is a critical message')
+
+
  # Trả về kết quả và các độ đo của mô hình
   return jsonify({
-    'message': 'Mô hình đã được huấn luyện và lưu thành công.',
     'model_filename': model_filename,
     'best_training_loss': train_loss,
     'best_test_loss': test_loss,
