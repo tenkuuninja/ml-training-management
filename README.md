@@ -12,3 +12,11 @@ Setup & run Training service
 - `cd training-service`
 - `pip install flask scikit-learn numpy pandas`
 - `python app.py`
+
+Setup & run Management service
+- Download jdk and install: [https://www.oracle.com/java/technologies/javase/jdk20-archive-downloads.html](https://www.oracle.com/java/technologies/javase/jdk20-archive-downloads.html)
+- Download eclipse and install: [https://www.eclipse.org/downloads/](https://www.eclipse.org/downloads/)
+- Import `management-service/MachineLearningAI/` project in to eclipse
+- Right click to file `src/main/java/com/example/NQH/MachineLearningAiApplication.java`
+- Select `Run as`
+- Click `Spring booot`
